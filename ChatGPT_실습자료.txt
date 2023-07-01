@@ -1,0 +1,89 @@
+분석 요청 실습
+-------------
+전자공시 : https://dart.fss.or.kr/main.do
+
+프롬프트 :
+  아래의 재무상태표를 분석하고, 글머리 기호를 포함한 5문장으로 요약해줘.
+    ( 재무제표 복사 ) 
+
+
+크롤링 실습
+-----
+대상 사이트 : http://smartcitysolutionmarket.com/scsm/locgov/locgovSlutnList.do?menuNo=16
+
+# 챗GPT 크롤링 실습 참조 링크 : https://colab.research.google.com/drive/1qM6kINSnoHqwGmG_8OeW7bcwXQ_ZkVaK?usp=sharing 
+
+
+
+OpenAI API 둘러보기
+------
+https://platform.openai.com/docs/api-reference/introduction
+
+
+
+
+OpenAI API 호출 VBA
+----------------
+
+Function ChatWithGPT(prompt As String) As String
+    ' Define the necessary variables
+    Dim requestURL As String
+    Dim apiKey As String
+    Dim response As String
+    
+    ' Set the values for the variables
+   
+    requestURL = "https://api.openai.com/v1/completions"
+    apiKey = "YOUR API KEY" ' Replace with your actual API key
+    
+
+    
+    ' Create an XMLHTTP object to make the HTTP request
+    Dim httpRequest As Object
+    Set httpRequest = CreateObject("MSXML2.XMLHTTP")
+    
+    ' Prepare the request
+    httpRequest.Open "POST", requestURL, False
+    httpRequest.setRequestHeader "Content-Type", "application/json"
+    httpRequest.setRequestHeader "Authorization", "Bearer " & apiKey
+    
+    ' Prepare the request payload
+    Dim payload As String
+    payload = "{""prompt"": """ & prompt & """, ""max_tokens"": 50, ""model"":""text-davinci-003""}"
+    
+    ' Send the request and capture the response
+    httpRequest.send payload
+    response = httpRequest.responseText
+   
+    
+    ChatWithGPT = response
+    
+End Function
+
+
+
+
+챗GPT 토크나이저 테스트
+-----------------------
+Link : https://platform.openai.com/tokenizer 
+
+
+
+종합소득세 안내 실습
+--------------------------
+# KMS와 챗GPT 연동 – 종합소득세 안내
+실습 : https://colab.research.google.com/drive/1SwAnvdka5BIQo-O0q_92cs2luI_7Ks9G?usp=sharing 
+
+
+
+
+사규 안내 연동
+--------------------------
+# KMS와 챗GPT 연동 – 사규 안내
+실습 : https://colab.research.google.com/drive/1t8QVTdLzIj-z3TvlUmXqIg1hhDs3yy1y?usp=sharing 
+
+Resource Link :
+    notion_qa_faiss_store.pkl
+       ( https://drive.google.com/file/d/1qtHRzD2PZDPGUSSaQ1qQ5K0NVdurLIu3/view?usp=sharing )
+    notion_qa_docs.index
+       (https://drive.google.com/file/d/15C5CiNYYDyhCbZqFgzEKr4p6gRHvd7FD/view?usp=sharing )
